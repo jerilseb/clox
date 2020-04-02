@@ -1,17 +1,22 @@
 #ifndef clox_chunk_h
 #define clox_chunk_h
 
-#include "common.h" 
+#include "common.h"
 #include "memory.h"
 #include "value.h"
 
 typedef enum {     
-    OP_RETURN,   
-    OP_CONSTANT    
-} OpCode; 
+    OP_RETURN,
+    OP_ADD,     
+    OP_SUBTRACT,
+    OP_MULTIPLY,
+    OP_DIVIDE, 
+    OP_NEGATE,
+    OP_CONSTANT
+} OpCode;
 
 typedef struct {
-    int count;    
+    int count;
     int capacity;
     uint8_t* code;
     int* lines;
@@ -21,6 +26,6 @@ typedef struct {
 void initChunk(Chunk* chunk);
 void writeChunk(Chunk* chunk, uint8_t byte, int line);
 void freeChunk(Chunk* chunk);
-int addConstant(Chunk* chunk, Value value); 
+int addConstant(Chunk* chunk, Value value);
 
 #endif 
