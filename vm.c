@@ -38,6 +38,7 @@ static InterpretResult run() {
       push(a op b); \
     } while (false)
 
+
   for (;;) {
 #ifdef DEBUG_TRACE_EXECUTION
     printf("          ");
@@ -57,7 +58,7 @@ static InterpretResult run() {
             push(constant);   
             break;                            
         }
-        case OP_NEGATE: push(-pop()); break;
+        case OP_NEGATE:   push(-pop()); break;
         case OP_ADD:      BINARY_OP(+); break;
         case OP_SUBTRACT: BINARY_OP(-); break;
         case OP_MULTIPLY: BINARY_OP(*); break;
@@ -76,6 +77,19 @@ static InterpretResult run() {
 
 
 InterpretResult interpret(const char* source) {
-  compile(source);                             
-  return INTERPRET_OK; 
+  Chunk chunk;                                 
+  initChunk(&chunk);
+
+  if (!compile(source, &chunk)) {              
+    freeChunk(&chunk);                         
+    return INTERPRET_COMPILE_ERROR;            
+  }                                            
+
+  vm.chunk = &chunk;                           
+  vm.ip = vm.chunk->code;                      
+
+  InterpretResult result = run();              
+
+  freeChunk(&chunk);                           
+  return result;  
 }

@@ -1,4 +1,4 @@
-BINARY_NAME=vm
+BINARY_NAME=clox
 
 all: build
 build: 
