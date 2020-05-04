@@ -1,10 +1,13 @@
 #include <stdarg.h>
 #include <stdio.h> 
+#include <string.h>
 
 #include "common.h"
-#include "vm.h"
-#include "debug.h"
 #include "compiler.h"
+#include "debug.h"
+#include "object.h"
+#include "memory.h"
+#include "vm.h"
 
 VM vm;
 
